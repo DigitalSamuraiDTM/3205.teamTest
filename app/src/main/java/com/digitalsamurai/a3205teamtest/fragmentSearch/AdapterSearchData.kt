@@ -35,6 +35,7 @@ class AdapterSearchData(private var data : ArrayList<DataUserRepo>) : RecyclerVi
         }
     }
 
+    //обновленная функция с указанием юзера
     fun notifyDataSetChanged(user : String?){
         this.username = user
         notifyDataSetChanged()

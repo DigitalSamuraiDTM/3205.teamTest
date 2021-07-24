@@ -19,17 +19,19 @@ class PresenterSearchFragment : MvpPresenter<InterfaceSearchView>() {
     val ERROR_SOMETHING_WRONG = 1
     val ERROR_REQUEST = 2
 
+    //notify необходим, для того, чтобы во время переворота экрана adapter знал об username, т.к. после поворота всё с чистого листа
     override fun attachView(view: InterfaceSearchView?) {
         adapter.notifyDataSetChanged(userName)
         super.attachView(view)
     }
 
+    //связь между ресайклером и адаптером
     fun setAdapterInRecycler(recycler : RecyclerView){
         adapter = AdapterSearchData(data)
-
         recycler.adapter = adapter
     }
 
+    //поиск репозиториев пользователя
     fun searchUsers(username : String) = GlobalScope.launch(Dispatchers.Main) {
         viewState.showLoading()
         userName = username
@@ -46,6 +48,8 @@ class PresenterSearchFragment : MvpPresenter<InterfaceSearchView>() {
 
         }
     }
+
+    //запрос на получение репозиториев
 
     fun querySearch(username : String) {
         RetrofitService.create().searchRepositories(username).enqueue(object : retrofit2.Callback<ArrayList<DataUserRepo>>{

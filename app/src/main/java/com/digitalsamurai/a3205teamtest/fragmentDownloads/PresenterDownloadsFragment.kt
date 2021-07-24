@@ -21,10 +21,11 @@ class PresenterDownloadsFragment : MvpPresenter<InterfaceDownloadsFragment>(){
 
     fun setAdapterInRecycler(recycler : RecyclerView){
         adapter = AdapterDownloadedRepos(data)
-
         recycler.adapter = adapter
     }
 
+
+    //функция наблюдения за изменениями в бд
     fun observeInDatabase(lifecycle: LifecycleOwner) {
         val liveData  = AppDatabase.create().daoDownloadedRepository().observeData()
         liveData.observe(lifecycle, object : Observer<List<DownloadedRepository>> {
@@ -41,7 +42,7 @@ class PresenterDownloadsFragment : MvpPresenter<InterfaceDownloadsFragment>(){
                     }
                 }
                 data.clear()
-                data.addAll(t!!)
+                data.addAll(t)
                 adapter.notifyDataSetChanged()
             }
 
